@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perpustakaan Digital</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+      }
+      header {
+        background-color: #002b5c;
+        color: white;
+        padding: 0px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 80px;
+      }
+      .image-class {
+        width: auto;
+        height: 160%;
+      }
+      h1 {
+        text-align: center;
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 15px;
+        margin: 0;
+        padding: 0;
+      }
+      nav ul li {
+        display: inline;
+      }
+      nav ul li a {
+        color: white;
+        text-decoration: none;
+      }
+      .container {
+        padding: 20px;
+        text-align: center;
+      }
+
+      .container h1 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      .container h3 {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #000000;
+        margin: 0 auto;
+        max-width: 1025px;
+        text-align: justify;
+      }
+      .book-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+      }
+      .book-item {
+        width: 300px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+      }
+      .book-item:hover {
+        transform: scale(1.05);
+      }
+      .book-item img {
+        max-width: 90%;
+        height: auto;
+        border-radius: 10px;
+      }
+      .book-item h3 {
+        margin: 10px 0;
+        font-size: 18px;
+      }
+      .book-item p {
+        margin: 5px 0;
+        color: #002b5c;
+      }
+
+      details {
+        width: 100%;
+        text-align: left;
+        margin-top: 10px;
+        overflow: hidden;
+      }
+      details[open] {
+        overflow: auto;
+      }
+      .button-container {
+        margin-top: 15px;
+      }
+      .borrow-btn,
+      .borrowed-btn {
+        padding: 10px 15px;
+        font-size: 14px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        color: white;
+      }
+      .borrow-btn {
+        background-color: #002b5c;
+      }
+      .borrowed-btn {
+        background-color: #888; 
+        cursor: not-allowed; 
+      }
+      footer {
+        margin-top: 20px;
+        text-align: center;
+        padding: 10px;
+        background-color: #002b5c;
+        color: white;
+        font-size: 14px;
+      }
+      .search-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+      .search-bar {
+        display: flex;
+        align-items: center;
+        border: 2px solid #002b5c;
+        border-radius: 5px;
+        overflow: hidden;
+        max-width: 1025px;
+        width: 100%;
+      }
+      .search-bar input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        outline: none;
+        font-size: 16px;
+      }
+      .search-bar button {
+        background-color: #002b5c;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .search-bar button:hover {
+        background-color: #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <img class="image-class" src="Image/LibraryLogo.png" alt="Perpustakaan Digital" />
+      <h2>BookTech Digital Library</h2>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="profile.html">Profil</a></li>
+          <li><a href="/transaction" onclick="handleTransactionClick(event)">Transaction</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="container">
+      <h1>Take an Adventure in Our Digital Book Collection</h1>
+      <div class="search-container">
+        <div class="search-bar">
+          <input type="text" id="search-bar" placeholder="Find a book.." oninput="filterBooks()" />
+          <button onclick="filterBooks()">Search</button>
+        </div>
+      </div>
+
+      <!-- Buku 1 -->
+      <div class="book-list" id="book-list">
+        <div class="book-item">
+          <img src="Image/book/bumi.jpg" alt="Bumi" />
+          <h3>Bumi | Tere Liye</h3>
+          <details>
+            <summary>Book Details</summary>
+            <ul>
+              <li><strong>Author:</strong> Tere Liye</li>
+              <li><strong>Publisher:</strong> Gramedia Pustaka Utama</li>
+              <li><strong>Year of Publication:</strong> 2014</li>
+              <li><strong>ISBN:</strong> 978-602-03-1262-0</li>
+              <li><strong>Category:</strong> Fantasi, Petualangan</li>
+              <li>
+                <strong> Synopsis:</strong> Novel pertama dalam serial ini memperkenalkan Raib, seorang gadis SMA yang memiliki kemampuan istimewa. Ia bertemu dengan Tamus, makhluk dari dunia paralel, yang membawanya ke klan Bulan, dunia
+                yang berdampingan dengan klan Bumi.
+              </li>
+            </ul>
+          </details>
+          <button id="btn-bumi" class="borrow-btn" onclick="handleAction('Bumi | Tere Liye', 'Novel [Fantasi/Pertualangan]')">Borrow</button>
+        </div>
+
+        <!-- Buku 2 -->
+        <div class="book-item" id="book-list">
+          <img src="Image/book/bulan.jpg" alt="Bulan" />
+          <h3>Bulan | Tere Liye</h3>
+          <details>
+            <summary>Book Details</summary>
+            <ul>
+              <li><strong>Author:</strong> Tere Liye</li>
+              <li><strong>Publisher:</strong> Gramedia Pustaka Utama</li>
+              <li><strong>Year of Publication:</strong> 2015</li>
+              <li><strong>ISBN:</strong> 978-602-03-1263-7</li>
+              <li><strong>Category:</strong> Fantasi, Petualangan</li>
+              <li>
+                <strong> Synopsis:</strong> Raib, Seli, dan Ali melanjutkan petualangan mereka ke klan Matahari dengan tujuan menyatukan klan Bulan dan klan Matahari. Mereka menghadapi berbagai tantangan, termasuk perburuan bunga yang dapat
+                mengabulkan permintaan.
+              </li>
+            </ul>
+          </details>
+          <button id="btn-bulan" class="borrow-btn" onclick="handleAction('Bulan | Tere Liye', 'Novel [Fantasi/Pertualangan]')">Borrow</button>
+        </div>
+
+        <!-- Buku 3 -->
+        <div class="book-item">
+          <img src="Image/book/matahari.jpg" alt="Matahari" />
+          <h3>Matahari | Tere Liye</h3>
+          <details>
+            <summary>Book Details</summary>
+            <ul>
+              <li><strong>Author:</strong> Tere Liye</li>
+              <li><strong>Publisher:</strong> Gramedia Pustaka Utama</li>
+              <li><strong>Year of Publication:</strong> 2016</li>
+              <li><strong>ISBN:</strong> 978-602-03-1264-4</li>
+              <li><strong>Category:</strong> Fantasi, Petualangan</li>
+              <li><strong> Synopsis:</strong> Ali, Raib, dan Seli menjelajahi rahim Bumi dan menemukan klan Bintang. Mereka berusaha menyelamatkan manusia di klan Bumi dari ancaman pasak yang akan meledak.</li>
+            </ul>
+          </details>
+          <button id="btn-matahari" class="borrow-btn" onclick="handleAction('Matahari | Tere Liye', 'Novel [Fantasi/Pertualangan]')">Borrow</button>
+        </div>
+
+        <!-- Buku 4 -->
+        <div class="book-item">
+          <img src="Image/book/bintang.jpg" alt="Bintang" />
+          <h3>Bintang | Tere Liye</h3>
+          <details>
+            <summary>Book Details</summary>
+            <ul>
+              <li><strong>Author:</strong> Tere Liye</li>
+              <li><strong>Publisher:</strong> Gramedia Pustaka Utama</li>
+              <li><strong>Year of Publication:</strong> 2017</li>
+              <li><strong>ISBN:</strong> 978-602-03-1265-1</li>
+              <li><strong>Category:</strong> Fantasi, Petualangan</li>
+              <li><strong> Synopsis:</strong> Ali, Raib, dan Seli berusaha menyelamatkan manusia di klan Bumi dengan mencegah pasak klan Bumi yang akan meledak. Mereka menghadapi berbagai rintangan dan pertarungan.</li>
+            </ul>
+          </details>
+          <button id="btn-bintang" class="borrow-btn" onclick="handleAction('Bintang | Tere Liye', 'Novel [Fantasi/Pertualangan]')">Borrow</button>
+        </div>
+
+        <!-- Buku 5 -->
+        <div class="book-item">
+          <img src="Image/book/ceros dan batozar.jpg" alt="CerosDanBatozar" />
+          <h3>Ceros dan Batozar | Tere Liye</h3>
+          <details>
+            <summary>Book Details</summary>
+            <ul>
+              <li><strong>Author:</strong> Tere Liye</li>
+              <li><strong>Publisher:</strong> Gramedia Pustaka Utama</li>
+              <li><strong>Year of Publication:</strong> 2018</li>
+              <li><strong>ISBN:</strong> 978-602-03-1264-4</li>
+              <li><strong>Category:</strong> Fantasi, Petualangan</li>
+              <li><strong> Synopsis:</strong> Novel spin-off yang menceritakan kisah Ceros dan Batozar, dua makhluk yang pernah ditemui oleh Ali, Raib, dan Seli dalam petualangan mereka.</li>
+            </ul>
+          </details>
+          <button id="btn-cerosdanbatozar" class="borrow-btn" onclick="handleAction('Ceros dan Batozar | Tere Liye', 'Novel [Fantasi/Pertualangan]')">Borrow</button>
+        </div>
+
+        <!-- Buku 6 -->
+        <div class="book-item">
+          <img src="Image/book/komet.jpg" alt="Komet" />
+          <h3>Komet | Tere Liye</h3>
+          <details>
+            <summary>Book Details</summary>
+            <ul>
+              <li><strong>Author:</strong> Tere Liye</li>
+              <li><strong>Publisher:</strong> Gramedia Pustaka Utama</li>
+              <li><strong>Year of Publication:</strong> 2018</li>
+              <li><strong>ISBN:</strong> 978-602-03-1267-5</li>
+              <li><strong>Category:</strong> Fantasi, Petualangan</li>
+              <li>
+                <strong> Synopsis:</strong> Ali, Raib, dan Seli menemukan pulau dengan tumbuhan aneh yang dinamai sesuai hari dalam seminggu. Mereka bertemu dengan sosok misterius yang memiliki wajah serupa namun berbeda nama di setiap
+                pulau.
+              </li>
+            </ul>
+          </details>
+          <button id="btn-komet" class="borrow-btn" onclick="handleAction('Komet | Tere Liye', 'Novel [Fantasi/Pertualangan]')">Borrow</button>
+        </div>
+
+        <!-- Buku 7 -->
+        <div class="book-item">
+          <img src="Image/book/komet minor.jpg" alt="KometMinor" />
+          <h3>Komet Minor | Tere Liye</h3>
+          <details>
+            <summary>Book Details</summary>
+            <ul>
+              <li><strong>Author:</strong> Tere Liye</li>
+              <li><strong>Publisher:</strong> Gramedia Pustaka Utama</li>
+              <li><strong>Year of Publication:</strong> 2019</li>
+              <li><strong>ISBN:</strong> 978-602-03-1268-2</li>
+              <li><strong>Category:</strong> Fantasi, Petualangan</li>
+              <li><strong> Synopsis:</strong> Ali, Raib, dan Seli menghadapi tokoh antagonis utama, Si Tanpa Mahkota, dalam dunia paralel. Mereka berusaha mengungkap misteri dan teka-teki yang belum terpecahkan.</li>
+            </ul>
+          </details>
+          <button id="btn-kometminor" class="borrow-btn" onclick="handleAction('Komet Minor | Tere Liye', 'Novel [Fantasi/Pertualangan]')">Borrow</button>
+        </div>
+
+        <!-- Buku 8 -->
+        <div class="book-item">
+          <img src="Image/book/selena.jpg" alt="Selena" />
+          <h3>Selena | Tere Liye</h3>
+          <details>
+            <summary>Book Details</summary>
+            <ul>
+              <li><strong>Author:</strong> Tere Liye</li>
+              <li><strong>Publisher:</strong> Gramedia Pustaka Utama</li>
+              <li><strong>Year of Publication:</strong> 2020</li>
+              <li><strong>ISBN:</strong> 978-602-03-1269-9</li>
+              <li><strong>Category:</strong> Fantasi, Petualangan</li>
+              <li><strong> Synopsis:</strong> Menceritakan kisah Miss Selena, guru matematika di sekolah Raib, yang ternyata memiliki masa lalu sebagai petarung hebat dari klan Bulan.</li>
+            </ul>
+          </details>
+          <button id="btn-selena" class="borrow-btn" onclick="handleAction('Selena | Tere Liye', 'Novel [Fantasi/Pertualangan]')">Borrow</button>
+        </div>
+
+        <!-- Buku 9 -->
+        <div class="book-item">
+          <img src="Image/book/nebula.jpg" alt="Nebula" />
+          <h3>Nebula | Tere Liye</h3>
+          <details>
+            <summary>Book Details</summary>
+            <ul>
+              <li><strong>Author:</strong> Tere Liye</li>
+              <li><strong>Publisher:</strong> Gramedia Pustaka Utama</li>
+              <li><strong>Year of Publication:</strong> 2020</li>
+              <li><strong>ISBN:</strong> 978-602-03-1264-4</li>
+              <li><strong>Category:</strong> Fantasi, Petualangan</li>
+              <li>
+                <strong> Synopsis:</strong> Raib, Seli, dan Ali melanjutkan petualangan mereka ke klan Nebula, tempat di mana mimpi dan kenyataan saling bertautan. Mereka menghadapi tantangan baru yang menguji persahabatan dan keberanian
+                mereka.
+              </li>
+            </ul>
+          </details>
+          <button id="btn-nebula" class="borrow-btn" onclick="handleAction('Nebula | Tere Liye', 'Novel [Fantasi/Pertualangan]')">Borrow</button>
+        </div>
+
+        <!-- Buku 10 -->
+        <div class="book-item">
+          <img src="Image/book/siputih.jpg" alt="SiPutih" />
+          <h3>Si Putih | Tere Liye</h3>
+          <details>
+            <summary>Book Details</summary>
+            <ul>
+              <li><strong>Author:</strong> Tere Liye</li>
+              <li><strong>Publisher:</strong> Gramedia Pustaka Utama</li>
+              <li><strong>Year of Publication:</strong> 2021</li>
+              <li><strong>ISBN:</strong> 978-602-03-1271-9</li>
+              <li><strong>Category:</strong> Fantasi, Petualangan</li>
+              <li><strong> Synopsis:</strong> Kisah tentang Si Putih, seekor kucing putih yang memiliki kemampuan luar biasa. Ia menjadi kunci dalam menyelesaikan misteri yang dihadapi oleh Raib, Seli, dan Ali.</li>
+            </ul>
+          </details>
+          <button id="btn-siputih" class="borrow-btn" onclick="handleAction('Si Putih | Tere Liye', 'Novel [Fantasi/Pertualangan]')">Borrow</button>
+        </div>
+
+        <!-- Buku 11 -->
+        <div class="book-item">
+          <img src="Image/book/bibigill.jpg" alt="BibiGill" />
+          <h3>Bibi Gill | Tere Liye</h3>
+          <details>
+            <summary>Book Details</summary>
+            <ul>
+              <li><strong>Author:</strong> Tere Liye</li>
+              <li><strong>Publisher:</strong> Gramedia Pustaka Utama</li>
+              <li><strong>Year of Publication:</strong> 2022</li>
+              <li><strong>ISBN:</strong> 978-602-03-1273-3</li>
+              <li><strong>Category:</strong> Fantasi, Petualangan</li>
+              <li><strong> Synopsis:</strong> Menceritakan kisah Bibi Gili, seorang wanita tua yang memiliki pengetahuan luas tentang dunia paralel. Ia membantu Raib, Seli, dan Ali dalam petualangan mereka.</li>
+            </ul>
+          </details>
+          <button id="btn-bibigill" class="borrow-btn" onclick="handleAction('Bibi Gill | Tere Liye', 'Novel [Fantasi/Pertualangan]')">Borrow</button>
+        </div>
+
+        <!-- Buku 12 -->
+        <div class="book-item">
+          <img src="Image/book/matahari minor.jpg" alt="MatahariMinor" />
+          <h3>Matahari Minor | Tere Liye</h3>
+          <details>
+            <summary>Book Details</summary>
+            <ul>
+              <li><strong>Author:</strong> Tere Liye</li>
+              <li><strong>Publisher:</strong> Gramedia Pustaka Utama</li>
+              <li><strong>Year of Publication:</strong> 2022</li>
+              <li><strong>ISBN:</strong> 978-623-99878-9-3</li>
+              <li><strong>Category:</strong> Fantasi, Petualangan</li>
+              <li>
+                <strong> Synopsis:</strong> Seli, yang memiliki kemampuan mengeluarkan petir, berpetualang ke klan yang malam harinya penuh horor. Ia harus memecahkan misteri pesan yang dikirim melalui teknologi mimpi untuk menyelamatkan
+                teman-temannya.
+              </li>
+            </ul>
+          </details>
+          <button id="btn-matahariminor" class="borrow-btn" onclick="handleAction('Matahari Minor | Tere Liye', 'Novel [Fantasi/Pertualangan]')">Borrow</button>
+        </div>
+      </div>
+    </div>
+    <footer>&copy; 2024 Perpustakaan Digital Karmilah. All rights reserved.</footer>
+    <script>
+      let selectedBook = null;
+
+      function handleTransactionClick(event) {
+        if (!selectedBook) {
+          event.preventDefault();
+          alert("Please choose a book first");
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const purchasedBooks = JSON.parse(localStorage.getItem("purchasedBooks")) || [];
+      
+        purchasedBooks.forEach(bookName => {
+          const button = document.querySelector(`button[onclick*="${bookName}"]`);
+          if (button) {
+            button.textContent = "Borrowed";
+            button.classList.remove("borrow-btn");
+            button.classList.add("borrowed-btn");
+            button.disabled = true; // Nonaktifkan tombol
+          }
+        });
+      });      
+
+      //document.addEventListener("DOMContentLoaded", () => {
+        //const purchasedBooks = JSON.parse(localStorage.getItem("purchasedBooks")) || [];
+        //purchasedBooks.forEach((book) => {
+          //const btn = document.getElementById(`btn-${book.toLowerCase().replace(/ /g, "")}`);
+          //if (btn) {
+            //btn.textContent = "Read";
+            //btn.className = "read-btn";
+            //btn.onclick = () => borrowbook(book);
+          //}
+        //});
+      //});
+
+      function handleAction(name, category) {
+        const purchasedBooks = JSON.parse(localStorage.getItem("purchasedBooks")) || [];
+
+        if (purchasedBooks.includes(name)) {
+          borrowbook(name);
+        } else {
+          const bookData = { name, category };
+          localStorage.setItem("selectedBook", JSON.stringify(bookData));
+          window.location.href = "transaksi.html";
+        }
+      }
+
+      //function borrowbook(name) {
+        //alert(`Open a book: ${name}`);
+      //}
+
+      function filterBooks() {
+        const query = document.getElementById("search-bar").value.toLowerCase();
+        const books = document.querySelectorAll(".book-item");
+
+        books.forEach((book) => {
+          const title = book.querySelector("h3").textContent.toLowerCase();
+          if (title.includes(query)) {
+            book.style.display = "block";
+          } else {
+            book.style.display = "none";
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

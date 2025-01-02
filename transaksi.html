@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Transaction</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+      }
+      header {
+        background-color: #002b5c;
+        color: white;
+        padding: 0px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 80px;
+      }
+      .image-class {
+        width: auto;
+        height: 160%;
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 15px;
+        margin: 0;
+        padding: 0;
+      }
+      nav ul li a {
+        color: white;
+        text-decoration: none;
+      }
+      .form-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 45px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .form-container label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold; /* Make labels bold */
+      }
+      .form-container input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .form-container button {
+        width: 100%;
+        padding: 10px;
+        background-color: #002b5c;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .radio-group {
+        display: flex;
+        gap: 55px;
+        margin-bottom: 25px;
+      }
+      .radio-group label {
+        font-weight: normal;
+      }
+      footer {
+        margin-top: 20px;
+        text-align: center;
+        padding: 10px;
+        background-color: #002b5c;
+        color: white;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <img class="image-class" src="Image/LibraryLogo.png" alt="Perpustakaan Digital" />
+      <h2>BookTech Digital Library</h2>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="list.html">Transaction List</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="form-container">
+      <center><h2>Transaksi</h2></center>
+      <form id="transaction-form" onsubmit="handleTransaction(event)">
+        <div style="text-align: center"></div>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required />
+
+        <label>Gender</label>
+        <div class="radio-group">
+          <label><input type="radio" name="gender" value="male" required /> Male</label>
+          <label><input type="radio" name="gender" value="female" required /> Female</label>
+        </div>
+
+        <label for="book-name">Book Name</label>
+        <input type="text" id="book-name" name="book-name" />
+
+        <label for="borrow-date">Date of borrowing</label>
+        <input type="date" id="borrow-date" name="borrow-date" required />
+
+        <label for="return-date">Date of return</label>
+        <input type="date" id="return-date" name="return-date" required />
+
+        <label for="category">Category</label>
+        <input type="text" id="category" name="category" />
+
+        <button type="submit">Confirm Borrow</button>
+      </form>
+    </div>
+
+    <footer>&copy; 2024 Perpustakaan Digital Karmilah. All rights reserved.</footer>
+
+    <script>
+      // Load book data from localStorage
+      document.addEventListener("DOMContentLoaded", () => {
+        const selectedBook = JSON.parse(localStorage.getItem("selectedBook"));
+
+        // Check if the book data exists in localStorage
+        if (selectedBook) {
+          // Populate the form fields with the selected book's details
+          document.getElementById("book-name").value = selectedBook.name || "";
+          document.getElementById("borrow-date").value = selectedBook.borrow || "";
+          document.getElementById("return-date").value = selectedBook.return || "";
+          document.getElementById("category").value = selectedBook.category || "";
+        }
+      });
+
+      function confirmBorrow() {
+        const selectedBook = JSON.parse(localStorage.getItem("selectedBook"));
+
+        if (selectedBook) {
+          let purchasedBooks = JSON.parse(localStorage.getItem("purchasedBooks")) || [];
+          purchasedBooks.push(selectedBook.name);
+          localStorage.setItem("purchasedBooks", JSON.stringify(purchasedBooks));
+
+          // Redirect kembali ke halaman utama setelah konfirmasi
+          window.location.href = "index.html";
+        }
+      }
+
+      function handleTransaction(event) {
+        event.preventDefault(); // Prevent form submission
+
+        // Check if required fields are filled
+        const name = document.getElementById("name").value;
+        const gender = document.querySelector('input[name="gender"]:checked');
+        const borrowDate = document.getElementById("borrow-date").value;
+        const returnDate = document.getElementById("return-date").value;
+
+        // Validate the form
+        if (!name || !gender || !borrowDate || !returnDate) {
+          alert("Please fill in all required fields.");
+        } else {
+          // Proceed with form submission or other actions
+          alert("Transaction confirmed! Proceeding to next page.");
+          // You can redirect or handle other logic here
+          window.location.href = "next-page.html"; // Replace with your next page URL
+        }
+      }
+
+      // Handle transaction submission
+      function handleTransaction(event) {
+        event.preventDefault();
+
+        // Retrieve selected book data from localStorage
+        const selectedBook = JSON.parse(localStorage.getItem("selectedBook"));
+
+        if (selectedBook) {
+          let purchasedBooks = JSON.parse(localStorage.getItem("purchasedBooks")) || [];
+
+          // Check if the book has already been purchased
+          if (!purchasedBooks.includes(selectedBook.name)) {
+            purchasedBooks.push(selectedBook.name);
+            localStorage.setItem("purchasedBooks", JSON.stringify(purchasedBooks));
+          }
+
+          alert("Confirmation Successful!");
+          localStorage.removeItem("selectedBook"); // Clear the selected book data from localStorage
+          window.location.href = "index.html"; // Redirect to homepage after transaction
+        } else {
+          alert("Invalid book data. Please try again.");
+        }
+      }
+    </script>
+  </body>
+</html>
